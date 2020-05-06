@@ -72,9 +72,7 @@ def main(keyword, startPage):
     upload_items(item_datas)
 
     # *------- 結束 -------*
-    print(bcolors.OKGREEN + '''  
-程式執行完成，請查看資料庫的 data{} 資料表。
-'''.format(datetime.now().strftime("%Y%m%d%H%M")) + bcolors.ENDC)
+    print(bcolors.OKGREEN + '程式執行完成，請查看資料庫中的 Items 資料表。' + bcolors.ENDC)
         
 if __name__ == "__main__":
     

@@ -5,8 +5,8 @@ import json
 import requests
 
 import settings as cfg
-from langconv import Converter
 from bcolors import bcolors
+from langconv import Converter
 
 
 def item_serch(keyword, page):
@@ -50,22 +50,27 @@ def item_get(iid):
     url = "{url}?key={apiKey}&secret={apiSecret}&api_name=item_get&num_iid={iid}".format(url=cfg.api['url'], apiKey=cfg.api['key'], apiSecret=cfg.api['secret'], iid=iid)
     
     downloaded = False
+    try_tiems = 0
     
-    while not downloaded:
+    while not downloaded or try_tiems > cfg.api['max_try_times']:
+        try_tiems += 1
         try:
             r = requests.get(url, headers=cfg.headers, timeout=cfg.api['timeout']).json()
             r_t = Converter('zh-hant').convert(json.dumps(r, ensure_ascii=False))
             json_obj = json.loads(r_t)
         except Exception as e:
-            print(bcolors.FAIL +'''解析 API 回傳的資料時發生未預期的錯誤，可能是 API 沒有正常運作造成的。''')
-            print('錯誤信息：')
-            print(e)
-            print(bcolors.ENDC)
+            print(bcolors.FAIL +'''
+API 回傳了無效的資料格式，請聯繫 API 供應商取得協助。
+錯誤信息：
+{}
+收到的資料：
+{}
+'''.format(e, json.dumps(r)) + bcolors.ENDC)
             exit()
         
         # API 例外處理
         if 'item' not in json_obj:
-            print(bcolors.FAIL +'''API 服務發生錯誤，請聯繫 API 供應商或程式開發者。''')
+            print(bcolors.FAIL +'''API 服務發生錯誤，請聯繫 API 供應商或程式開發者。''' + bcolors.ENDC)
             if 'error' in json_obj:
                 print('錯誤信息：')
                 print(json_obj['error'])
