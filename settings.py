@@ -13,15 +13,18 @@ api = {
     'secret': '',
     
     # 請求 API 的超時限制
-    'timeout': 10
+    'timeout': 10,
+    
+    # 重新下載商品資料的次數限制
+    'max_try_times': 10
 }
 
 # 資料庫連線參數
 sql = {
-    'host': 'localhost',
+    'host': '',
     'username': '',
     'password': '',
-    'database': 'master',
+    'database': '',
     
     # 嘗試連接資料庫的限制時間 (秒)
     'login_timeout': 10
