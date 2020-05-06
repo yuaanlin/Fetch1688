@@ -9,14 +9,20 @@ headers = {
 # API 服務授權參數
 api = {
     'url': 'https://api.onebound.cn/1688/api_call.php',
-    'key': '',
-    'secret': ''
+    'key': 'tel886939015945',
+    'secret': '20200503',
+    
+    # 請求 API 的超時限制
+    'timeout': 10
 }
 
 # 資料庫連線參數
 sql = {
-    'host': '',
-    'username': '',
-    'password': '',
-    'database': ''
+    'host': 'localhost',
+    'username': 'AbolrousHazem',
+    'password': '340$Uuxwp7Mcxo7Khy',
+    'database': 'master',
+    
+    # 嘗試連接資料庫的限制時間 (秒)
+    'login_timeout': 10
 }

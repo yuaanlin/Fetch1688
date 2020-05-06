@@ -6,6 +6,7 @@ import requests
 
 import settings as cfg
 from langconv import Converter
+from bcolors import bcolors
 
 
 def item_serch(keyword, page):
@@ -17,22 +18,23 @@ def item_serch(keyword, page):
     url = "{url}?key={apiKey}&secret={apiSecret}&api_name=item_search&q={keyword}&page={page}".format(url=cfg.api['url'], apiKey=cfg.api['key'], apiSecret=cfg.api['secret'], keyword=keyword, page=page)
     
     try:
-        r = requests.get(url, headers=cfg.headers)
+        r = requests.get(url, headers=cfg.headers, timeout=cfg.api['timeout'])
         json_obj = r.json()
     except Exception as e:
-        print('''解析 API 回傳的資料時發生未預期的錯誤，可能是 API 沒有正常運作造成的。''')
+        print(bcolors.FAIL + '''
+解析 API 回傳的資料時發生未預期的錯誤，可能是 API 沒有正常運作造成的。''')
         print('錯誤信息：')
         print(e)
-        print('')
+        print(bcolors.ENDC)
         exit()
     
     # API 例外處理
     if 'items' not in json_obj:
-        print('''API 服務發生錯誤。''')
+        print(bcolors.FAIL +'''API 服務發生錯誤。''')
         if 'error' in json_obj:
             print('錯誤信息：')
             print(json_obj['error'])
-            print('')
+            print(bcolors.ENDC)
         exit()
         
     for item in json_obj['items']['item']:
@@ -51,23 +53,23 @@ def item_get(iid):
     
     while not downloaded:
         try:
-            r = requests.get(url, headers=cfg.headers).json()
+            r = requests.get(url, headers=cfg.headers, timeout=cfg.api['timeout']).json()
             r_t = Converter('zh-hant').convert(json.dumps(r, ensure_ascii=False))
             json_obj = json.loads(r_t)
         except Exception as e:
-            print('''解析 API 回傳的資料時發生未預期的錯誤，可能是 API 沒有正常運作造成的。''')
+            print(bcolors.FAIL +'''解析 API 回傳的資料時發生未預期的錯誤，可能是 API 沒有正常運作造成的。''')
             print('錯誤信息：')
             print(e)
-            print('')
+            print(bcolors.ENDC)
             exit()
         
         # API 例外處理
         if 'item' not in json_obj:
-            print('''API 服務發生錯誤，請聯繫 API 供應商或程式開發者。''')
+            print(bcolors.FAIL +'''API 服務發生錯誤，請聯繫 API 供應商或程式開發者。''')
             if 'error' in json_obj:
                 print('錯誤信息：')
                 print(json_obj['error'])
-                print('')
+                print(bcolors.ENDC)
             exit()
         
         item = json_obj['item']
