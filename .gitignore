@@ -4,3 +4,6 @@ env
 # Python Cache Files
 __pycache__
 *.pyc
+
+# Other Files
+misc
