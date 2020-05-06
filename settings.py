@@ -8,6 +8,7 @@ headers = {
 
 # API 服務授權參數
 api = {
+    'url': 'https://api.onebound.cn/1688/api_call.php',
     'key': '',
     'secret': ''
 }
