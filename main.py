@@ -33,13 +33,12 @@ def main(keyword, startPage):
             
             # 下載一個頁面內的商品
             items = item_serch(keyword, curr_page)
-
+            
             # 抽出該頁面商品的 id
             for item in items:
                 item_ids.append(item['num_iid'])
-                    
             print('''目前已經搜尋到 {} 個關於 「{}」 的商品了 (按 Ctrl + C 進入第二階段）
-    '''.format(len(item_ids), keyword))
+                    '''.format(len(item_ids), keyword))
                     
             # 下一頁
             curr_page += 1
@@ -60,10 +59,14 @@ def main(keyword, startPage):
     try:
         pool = Pool()
         for item in tqdm.tqdm(pool.imap_unordered(item_get, item_ids), total=len(item_ids), desc='商品下載進度'):
-            item_datas.append(item)
+            if item != None:
+                item_datas.append(item)
             pass
         pool.close()
         pool.join()
+        print(bcolors.OKGREEN + '''
+第二階段程式執行完畢。
+    實際下載了 {} 個有效的商品數據'''.format(len(item_datas)) + bcolors.ENDC)
     except:
         exit()
    
