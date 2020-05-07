@@ -18,7 +18,7 @@ def item_serch(keyword, page):
     url = "{url}?key={apiKey}&secret={apiSecret}&api_name=item_search&q={keyword}&page={page}".format(url=cfg.api['url'], apiKey=cfg.api['key'], apiSecret=cfg.api['secret'], keyword=keyword, page=page)
     
     try:
-        r = requests.get(url, headers=cfg.headers, timeout=cfg.api['timeout'])
+        r = requests.get(url, headers=cfg.headers)
         json_obj = r.json()
     except Exception as e:
         print(bcolors.FAIL + '''
@@ -55,7 +55,7 @@ def item_get(iid):
     while not downloaded or try_tiems > cfg.api['max_try_times']:
         try_tiems += 1
         try:
-            r = requests.get(url, headers=cfg.headers, timeout=cfg.api['timeout']).json()
+            r = requests.get(url, headers=cfg.headers).json()
             r_t = Converter('zh-hant').convert(json.dumps(r, ensure_ascii=False))
             json_obj = json.loads(r_t)
         except Exception as e:

@@ -56,13 +56,16 @@ def main(keyword, startPage):
 下載完成後將自動開始第三階段。
 
 ''' + bcolors.ENDC)
-
-    pool = Pool()
-    for item in tqdm.tqdm(pool.imap_unordered(item_get, item_ids), total=len(item_ids), desc='商品下載進度'):
-        item_datas.append(item)
-        pass
-    pool.close()
-    pool.join()
+    
+    try:
+        pool = Pool()
+        for item in tqdm.tqdm(pool.imap_unordered(item_get, item_ids), total=len(item_ids), desc='商品下載進度'):
+            item_datas.append(item)
+            pass
+        pool.close()
+        pool.join()
+    except:
+        exit()
    
    # *------- 第三階段 -------*
     print(bcolors.HEADER + '''
