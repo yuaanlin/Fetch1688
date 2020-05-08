@@ -75,10 +75,10 @@ def main(keyword, startPage):
 第三階段：上傳至資料庫
 程式將把下載好的商品資料上傳至資料庫。''' + bcolors.ENDC)
 
-    upload_items(item_datas)
+    upload_items(item_datas, keyword)
 
     # *------- 結束 -------*
-    print(bcolors.OKGREEN + '程式執行完成，請查看資料庫中的 Items 資料表。' + bcolors.ENDC)
+    print(bcolors.OKGREEN + '程式執行完成，請查看 "{}" 資料庫中的 "{}" 資料表。'.format(cfg.sql['database'], keyword) + bcolors.ENDC)
         
 if __name__ == "__main__":
     
