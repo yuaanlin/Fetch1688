@@ -1,4 +1,6 @@
-# "Fetch1688" Python API 串接程式使用說明
+# Fetch1688
+
+Python API 串接程式使用說明
 
 ## 目錄
 
